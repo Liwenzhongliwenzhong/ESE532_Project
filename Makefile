@@ -62,9 +62,6 @@ DECODER_SOURCES = Decoder/Decoder.cpp
 DECODER_OBJECTS =$(DECODER_SOURCES:.cpp=.o)
 DECODER_EXE = decoder
 
-SHA256_SOURCES = SHA256/sha256.cpp SHA256/sha256_test.cpp
-SHA256_OBJECTS =$(SHA256_SOURCES:.cpp=.o)
-SHA256_EXE = sha256
 # CPU_SOURCES = cpu/Host.cpp ../../common/EventTimer.cpp ../../common/Utilities.cpp
 # CPU_OBJECTS=$(CPU_SOURCES:.cpp=.o)
 # CPU_EXE = mmult_cpu
@@ -87,11 +84,8 @@ $(SERVER_EXE): $(SERVER_OBJECTS)
 $(DECODER_EXE): $(DECODER_OBJECTS)
 	$(HOST_CXX) -o "$@" $(+) $(LDFLAGS)
 
-$(SHA256_EXE): $(SHA256_OBJECTS)
-	$(HOST_CXX) -o "$@" $(+) $(LDFLAGS)
-
 .cpp.o:
-	g++ -O3 $(SHA256_SOURCES) -o "$@"
+	$(HOST_CXX) $(CXXFLAGS) -I./server -o "$@" "$<"
 
 #
 # primary build targets
@@ -103,7 +97,7 @@ $(SHA256_EXE): $(SHA256_OBJECTS)
 .NOTPARALLEL: clean
 
 clean:
-	-$(RM) $(SERVER_EXE) $(SERVER_OBJECTS) $(DECODER_EXE) $(DECODER_OBJECTS) $(CLIENT_EXE) $(SHA256_EXE)
+	-$(RM) $(SERVER_EXE) $(SERVER_OBJECTS) $(DECODER_EXE) $(DECODER_OBJECTS) $(CLIENT_EXE)
 
 # clean-cpu:
 # 	-$(RM) $(CPU_EXE) $(CPU_OBJECTS) 
