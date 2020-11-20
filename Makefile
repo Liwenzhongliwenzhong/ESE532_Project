@@ -127,3 +127,4 @@ clean:
 # 	$(VPP) $(VPP_OPTS) -k mmult_fpga --compile -I"$(<D)" --config fpga/design.cfg -o"$@" "$<"
 # $(XCLBIN): $(XO)
 # 	$(VPP) $(VPP_OPTS) --link --config fpga/design.cfg -o"$@" $(+)
+

@@ -14,7 +14,7 @@ int compress(chunk* output, unsigned char* input, int length) {
 
 		for (int i=0; i<SHA256_BLOCK_SIZE; i++)
 		{
-			printf("%02X", (output + chunk_num)->chunk_hash[i]);
+			printf("%02X ", (output + chunk_num)->chunk_hash[i]);
 		}
 		printf("\n");
 		offset += size;
