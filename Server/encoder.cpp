@@ -24,6 +24,7 @@ int offset = 0;
 unsigned char* input_file;
 unsigned char* output_file;
 
+
 void handle_input(int argc, char* argv[], int* payload_size) {
 	int x;
 	extern char *optarg;
@@ -48,6 +49,7 @@ int main(int argc, char* argv[]) {
 	int done = 0;
 	int length = 0;
 	int count = 0;
+	chunk compressed_chunks[MAX_NUM_CHUNK];
 	ESE532_Server server;
 
 	// default is 2k
@@ -56,14 +58,15 @@ int main(int argc, char* argv[]) {
 	// set payload_size if decalred through command line
 	handle_input(argc, argv, &payload_size);
 
-	input_file = (unsigned char*) malloc(sizeof(unsigned char) * 70000000);
+	input_file = (unsigned char*) malloc(sizeof(unsigned char) * 1000000);
 	if (input_file == NULL) {
 		printf("input help\n");
 	}
-	output_file = (unsigned char*) malloc(sizeof(unsigned char) * 70000000);
+	output_file = (unsigned char*) malloc(sizeof(unsigned char) * 1000000);
 	if (output_file == NULL) {
 		printf("output help\n");
 	}
+
 
 	for (int i = 0; i < NUM_PACKETS; i++) {
 		input[i] = (unsigned char*) malloc(
@@ -125,7 +128,7 @@ int main(int argc, char* argv[]) {
 		writer++;
 	}
 
-	compress(output_file, input_file, offset);
+	compress(compressed_chunks, input_file, offset);
 	
 	FILE *outfd;
 	if (argc == 1)

@@ -1,18 +1,24 @@
 #include "compress.h"
 
-int compress(unsigned char* output, unsigned char* input, int length) {  
+int compress(chunk* output, unsigned char* input, int length) {
 	
-	HashMapTable hash;
-	SHA256 sha;
-	unsigned char* chunk = (unsigned char*)malloc(MAX_CHUNK_SIZE*sizeof(unsigned char));
-	int i=0;
-	while(i < length){
+
+	int offset = 0;
+	int chunk_num = 0;
+	while(offset < length){
 		//split file into chunks
-		unsigned size = chunking(input+i, chunk, length-i);
-		i += size;
-		printf ("Chunk size = \t%d\n", size);
-		printf("First three characters of chunk:\t");
-		printf("%c%c%c\n", *chunk, *(chunk+1), *(chunk+1));
+		unsigned size = chunking(input + offset, (output + chunk_num)->chunk_data, length - offset);
+		SHA256_CTX ctx;
+		sha256(&ctx, (output + chunk_num)->chunk_data, (output + chunk_num)->chunk_hash, size);
+
+
+		for (int i=0; i<SHA256_BLOCK_SIZE; i++)
+		{
+			printf("%02X", (output + chunk_num)->chunk_hash[i]);
+		}
+		printf("\n");
+		offset += size;
+		chunk_num ++;
 	}
 	return 0;
 }

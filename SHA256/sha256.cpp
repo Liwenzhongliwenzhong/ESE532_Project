@@ -4,7 +4,7 @@
 *********************************************************************/
 #include <stdlib.h>
 #include <memory.h>
-#include "sha.h"
+#include "sha256.h"
 
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
 #define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))

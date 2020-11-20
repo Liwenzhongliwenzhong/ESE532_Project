@@ -6,4 +6,10 @@
 #include "lzw.h"
 #include "hash_table.h"
 
-int compress(unsigned char* output, unsigned char* input, int length);
+typedef struct {
+	unsigned char chunk_data[MAX_CHUNK_SIZE];
+    unsigned char chunk_hash[SHA256_BLOCK_SIZE];
+	//LZW can also be stored here. See further implementation
+} chunk;
+
+int compress(chunk* output, unsigned char* input, int length);
